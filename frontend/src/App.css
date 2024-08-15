@@ -1,0 +1,15 @@
+.mainCont{
+  border: 2px solid;
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  border-radius: 12px;
+}
+
+.displayContainer{
+  height: 70vh;
+  overflow-x:hidden;
+  flex-direction: column;
+}
