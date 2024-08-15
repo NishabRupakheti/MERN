@@ -16,7 +16,7 @@ const PostCompo = () => {
   }
   return (
     <>
-      <div className="mb-3 mt-3">
+      <div className="mb-3 mt-1 ">
         <label htmlFor="exampleFormControlInput1" className="form-label">
           Name
         </label>
