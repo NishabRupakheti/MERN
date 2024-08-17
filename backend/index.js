@@ -54,13 +54,6 @@ app.post('/message', async (req,res)=>{
 
 })
 
-app.get("/", (req, res) => {
-  res.send(
-    '<h1 style="text-align:center" >Welcome to the express server </h1>'
-  );
-});
-
-
 app.delete('/message/:id' , async (req,res)=>{
     const {id} = req.params
     try{
