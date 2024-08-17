@@ -25,9 +25,11 @@ app.use(express.json());
 app.get("/message", async (req, res) => {
   try {
     const messages =  await Post.find();
-    res.json(messages);
+    res.status(200).json(messages);
   } catch (err) {
-    console.error(err);
+    res.status(500).json({
+      message : err
+    })
   }
 });
 
@@ -41,10 +43,12 @@ app.post('/message', async (req,res)=>{
         })
 
         await savingmessage.save()
-        res.send(savingmessage)
+        res.status(201).send(savingmessage)
     }   
     catch(err){
-        console.error(err)
+       res.status(500).json({
+        message : err
+       })
     }
     
 
@@ -59,7 +63,6 @@ app.get("/", (req, res) => {
 
 app.delete('/message/:id' , async (req,res)=>{
     const {id} = req.params
-    
     try{
       await Post.findByIdAndDelete(id)
       res.status(201).json({"message": "Done"})
