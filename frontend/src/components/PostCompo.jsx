@@ -7,7 +7,7 @@ const PostCompo = () => {
 
   const handleClick = async ()=>{
     
-    await axios.post("http://localhost:4000/message",{
+    await axios.post("http://localhost:4000/api/message",{
       name : name,
       message : text
     })

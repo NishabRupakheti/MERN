@@ -16,7 +16,7 @@ const GetCompo = () => {
   const handleDelete = async (id) => {
     try {
       const deleteResponse = await axios.delete(
-        `http://localhost:4000/message/${id}`
+        `http://localhost:4000/api/message/${id}`
       );
       console.log(deleteResponse);
       setRerendering(!rerendering);
