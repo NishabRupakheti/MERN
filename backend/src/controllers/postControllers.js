@@ -40,9 +40,24 @@ const deleteMessage = async (req,res)=>{
     }
 }
 
+// functionality 
+const putMessage = async(req,res)=>{
+  try{
+    const {id , message } = req.body
+    const messageObj = {message : message }
+    await Post.findByIdAndUpdate(id,messageObj)
+    res.status(201).json({message : "Done"})
+  }
+  catch(err){
+    res.json({err})
+  }
+
+}
+
 module.exports = {
     getMessage,
     createMessage,
-    deleteMessage
+    deleteMessage,
+    putMessage
 }
 

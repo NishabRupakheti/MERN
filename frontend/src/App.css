@@ -16,3 +16,8 @@
   font-weight: 400;
   font-style: normal;
 }
+
+.inputf{
+  display: none;
+  border-radius: 12px;
+}

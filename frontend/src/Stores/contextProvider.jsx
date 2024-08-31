@@ -6,6 +6,7 @@ const Context = createContext();
 export const ContextProvider = ({ children }) => {
   const [displayLogic, setdisplayLogic] = useState("GET");
   const [data, setData] = useState([])
+  
 
 
   // fetch the data and encapsulates the array into data variable/state ..  
