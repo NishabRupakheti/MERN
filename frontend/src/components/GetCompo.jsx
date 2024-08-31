@@ -32,7 +32,7 @@ const GetCompo = () => {
           <div
             key={item._id}
             className="card"
-            style={{ width: "25rem", marginBottom: "10px" }}
+            style={{ width: "32rem", marginBottom: "10px" }}
           >
             <div className="text-center card-header">id : {item._id}</div>
             <div className="card-body">
