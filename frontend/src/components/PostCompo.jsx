@@ -18,7 +18,7 @@ const PostCompo = () => {
     <>
       <div className="mb-3 mt-1 ">
         <label htmlFor="exampleFormControlInput1" className="form-label">
-          Name
+          Title
         </label>
         <input
           value={name}
@@ -26,7 +26,7 @@ const PostCompo = () => {
           type="text"
           className="form-control"
           id="exampleFormControlInput1"
-          placeholder="Enter your name"
+          placeholder="Enter something"
         />
       </div>
       <div className="mb-3">
@@ -40,7 +40,7 @@ const PostCompo = () => {
           id="exampleFormControlTextarea1"
           rows="3"
         ></textarea>
-        <button className="btn mt-3" onClick={handleClick} >Submit</button>
+        <button className="btn btn-sm btn-outline-dark mt-3" onClick={handleClick} >Submit</button>
       </div>
     </>
   );
