@@ -1,4 +1,3 @@
-
 // This is an authentication controller .... all the logics related to the authentication is written here ... 
 
 const jwt = require("jsonwebtoken");
@@ -45,10 +44,13 @@ const registerUser = async (req, res) => {
 // Login logic ..... 
 const loginUser = async (req, res) => {
   try {
-    // taking the cred from the frotend client ... 
+    // taking the cred from the client ... 
     const { userName, password } = req.body;
-
     const findUser = await User.findOne({ userName });
+
+    if(!findUser) return res.status(400).json({
+      message : "User not found"
+    })
 
     // if the user is found check if the provided password is correct .. generate token and send it back to client ..  
     if (findUser.password == password) {
@@ -59,7 +61,7 @@ const loginUser = async (req, res) => {
       );
 
       res.json({
-        message : token
+        token : token
       });
 
       
@@ -68,12 +70,11 @@ const loginUser = async (req, res) => {
         message: "Not matched",
       });
     }
-  } catch (err) {
-    console.error("Cannot login the user ", err);
-    res.status(500).json({
-      message: err,
-    });
+  } catch(error) {
+    console.log(error)
+    res.status(500).send(error);
   }
+
 };
 
 module.exports = {
