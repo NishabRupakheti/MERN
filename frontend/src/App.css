@@ -21,3 +21,14 @@
   display: none;
   border-radius: 12px;
 }
+
+.reglog{
+  border: 2px solid;
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+  border-radius: 30px;
+  padding: 15px;
+}

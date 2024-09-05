@@ -7,7 +7,13 @@ export const ContextProvider = ({ children }) => {
   const [displayLogic, setdisplayLogic] = useState("GET");
   const [data, setData] = useState([])
   
+  const [isLoggedIn , setIsloggedIn] = useState(false)
 
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+
+  const changeLogState = ()=>{
+    setIsloggedIn(!isLoggedIn)
+  }
 
   // fetch the data and encapsulates the array into data variable/state ..  
   const getFunction = async() => {
@@ -15,12 +21,12 @@ export const ContextProvider = ({ children }) => {
       const response = await axios.get("http://localhost:4000/api/message")
       setData(response.data)
     } catch (err) {
-      console.log("Something wrong happend")
+      console.log("Failed to fetch the data", err)
     }
   };
 
   return (
-    <Context.Provider value={{ displayLogic, setdisplayLogic, getFunction , data , setData }}>
+    <Context.Provider value={{ displayLogic, setdisplayLogic, getFunction , data , setData , isLoggedIn , setIsloggedIn , changeLogState , isAuthenticated, setIsAuthenticated }}>
       {children}
     </Context.Provider>
   );
