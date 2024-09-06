@@ -1,19 +1,33 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import Context from "../Stores/contextProvider";
 
 const PostCompo = () => {
+  const { token } = useContext(Context);
+
   const [name, setName] = useState("");
   const [text, settext] = useState("");
 
-  const handleClick = async ()=>{
-    
-    await axios.post("http://localhost:4000/api/message",{
-      name : name,
-      message : text
-    })
-    setName("")
-    settext("")
-  }
+  const handleClick = async () => {
+    try {
+      await axios.post(
+        "http://localhost:4000/api/message",
+        {
+          title: name,
+          message: text,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setName("");
+      settext("");
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <>
       <div className="mb-3 mt-1 ">
@@ -40,7 +54,12 @@ const PostCompo = () => {
           id="exampleFormControlTextarea1"
           rows="3"
         ></textarea>
-        <button className="btn btn-sm btn-outline-dark mt-3" onClick={handleClick} >Submit</button>
+        <button
+          className="btn btn-sm btn-outline-dark mt-3"
+          onClick={handleClick}
+        >
+          Submit
+        </button>
       </div>
     </>
   );

@@ -9,6 +9,8 @@ export const ContextProvider = ({ children }) => {
   
   const [isLoggedIn , setIsloggedIn] = useState(false)
 
+  const [token, setToken ] = useState('')
+
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   const changeLogState = ()=>{
@@ -18,7 +20,11 @@ export const ContextProvider = ({ children }) => {
   // fetch the data and encapsulates the array into data variable/state ..  
   const getFunction = async() => {
     try {
-      const response = await axios.get("http://localhost:4000/api/message")
+      const response = await axios.get("http://localhost:4000/api/message",{
+        headers:{
+          Authorization : `Bearer ${token}` 
+        }
+      })
       setData(response.data)
     } catch (err) {
       console.log("Failed to fetch the data", err)
@@ -26,7 +32,7 @@ export const ContextProvider = ({ children }) => {
   };
 
   return (
-    <Context.Provider value={{ displayLogic, setdisplayLogic, getFunction , data , setData , isLoggedIn , setIsloggedIn , changeLogState , isAuthenticated, setIsAuthenticated }}>
+    <Context.Provider value={{ displayLogic, setdisplayLogic, getFunction , data , setData , isLoggedIn , setIsloggedIn , changeLogState , isAuthenticated, setIsAuthenticated , token, setToken }}>
       {children}
     </Context.Provider>
   );

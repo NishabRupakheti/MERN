@@ -6,7 +6,7 @@ import Logregstate from "./Logregstate";
 
 
 const AuthenticationDis = () => {
-  const { isAuthenticated, setIsAuthenticated } = useContext(Context);
+  const { isAuthenticated } = useContext(Context);
 
   return isAuthenticated ? (
     <div className="container row mainCont mt-5 p-3">

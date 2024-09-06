@@ -35,6 +35,7 @@ const deleteMessage = async (req, res) => {
     const { id } = req.body;
 
     try {
+        
         const deletedMessage = await Message.findByIdAndDelete({
             _id: id
         });
@@ -56,7 +57,7 @@ const putMessage = async (req, res) => {
 
     try {
         const updatedMessage = await Message.findOneAndUpdate(
-            { _id: id, email: req.user.userId }, // ensure the user can only update their own messages
+            { _id: id, email: req.user.userId }, 
             { title, message },
             { new: true }
         );

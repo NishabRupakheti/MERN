@@ -5,7 +5,7 @@ import NoDTA from "./NoDTA";
 import { FaRegEdit } from "react-icons/fa";
 
 const GetCompo = () => {
-  const { data, getFunction } = useContext(Context);
+  const { data, getFunction, token } = useContext(Context);
 
   const [rerendering, setRerendering] = useState(true);
 
@@ -22,10 +22,18 @@ const GetCompo = () => {
 
   const handleDelete = async (id) => {
     try {
-      const deleteResponse = await axios.delete(
-        `http://localhost:4000/api/message/${id}`
-      );
-      console.log(deleteResponse);
+      await axios.delete(
+        "http://localhost:4000/api/message",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          data:{
+            id : id
+          }
+        }
+      )
+
       setRerendering(!rerendering);
     } catch (err) {
       console.error("Error while deleting the post", err);
@@ -35,16 +43,24 @@ const GetCompo = () => {
   const handleUpdate = async (id) => {
     if (showInput) {
       try {
-        await axios.put("http://localhost:4000/api/message", {
-          id: id,
-          message: inputf,
-        });
+        await axios.put(
+          "http://localhost:4000/api/message",
+          {
+            id: id,
+            message: inputf,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         setInputf("");
         setUpdateState(!updateState);
         setShowInput(!showInput);
       } catch (err) {
-        console.error("Cannot send the put request");
+        console.error("Cannot send the put request", err);
       }
     }
   };
@@ -55,7 +71,6 @@ const GetCompo = () => {
       [id]: !prevState[id],
     }));
   };
-  
 
   return (
     <>
@@ -69,7 +84,8 @@ const GetCompo = () => {
             <div className="text-center card-header">id : {item._id}</div>
             <div className="card-body">
               <h5 className="card-title">
-                {item.name} <FaRegEdit onClick={ () =>  spawnInputField(item._id)} />{" "}
+                {item.title}{" "}
+                <FaRegEdit onClick={() => spawnInputField(item._id)} />{" "}
               </h5>
               <input
                 type="text"
