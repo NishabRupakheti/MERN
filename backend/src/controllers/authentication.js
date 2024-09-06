@@ -10,33 +10,35 @@ const JWT_SECRET = process.env.JWT_SECRET
 const registerUser = async (req, res) => {
 
   // take the user cred and stores them in the database ... 
-  const { userName, password } = req.body;
+  const { email, password } = req.body;
 
   // check if the user already exist .. 
   try {
-    const fetchuser = await User.findOne({ userName });
+    const fetchuser = await User.findOne({ email });
     if (fetchuser) {
-      return res.json({
+      return res.status(409).json({
         message: "User already registered "
       })
     }
     // if not creates a new object instance of the model and saves it ... 
     const user = new User({
-      userName,
+      email,
       password, 
     });
 
     await user.save();
     return res.status(201).json({
       message: "User registered successful",
-    });
-
+    })
 
   } catch (err) {
-    console.error("Error counterd while registering" , err);
-    res.send({
-      message : err
+    console.error("Error counterd while registering" , err.errors);
+
+    res.status(500).json({
+      message : "Internal server error",
+      err: err.errors
     })
+
   }
 };
 
@@ -45,8 +47,8 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
   try {
     // taking the cred from the client ... 
-    const { userName, password } = req.body;
-    const findUser = await User.findOne({ userName });
+    const { email, password } = req.body;
+    const findUser = await User.findOne({ email });
 
     if(!findUser) return res.status(400).json({
       message : "User not found"
@@ -55,7 +57,7 @@ const loginUser = async (req, res) => {
     // if the user is found check if the provided password is correct .. generate token and send it back to client ..  
     if (findUser.password == password) {
       const token = jwt.sign(
-        { userId: findUser._id, userName: findUser.userName },
+        { userId: findUser._id, email: findUser.email },
         JWT_SECRET,
         { expiresIn: "1h" }
       );

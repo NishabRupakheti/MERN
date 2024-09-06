@@ -14,7 +14,7 @@ const Login = () => {
             <form className="mx-auto">
                 <h4 className="text-center">Login</h4>
                 <div className="mb-3 mt-5">
-                  <label htmlFor="exampleInputEmail1" className="form-label">UserName</label>
+                  <label htmlFor="exampleInputEmail1" className="form-label">Email</label>
                   <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
                 </div>
                 <div className="mb-3"/>

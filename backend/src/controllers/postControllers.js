@@ -3,9 +3,9 @@ const Message = require('../db/models/DBschema');
 // Logic to get the messages for the logged-in user
 const getMessage = async (req, res) => {
     try {
-        const messages = await Message.find({ userName: req.user.userId }).populate('userName', 'userName');
+        const messages = await Message.find({ email: req.user.userId }).populate('email', 'email');
         res.json(messages);
-    } catch (err) {
+    } catch (err) { 
         console.error(err);
         res.status(500).json({ message: "Error retrieving messages" });
     }
@@ -17,7 +17,7 @@ const createMessage = async (req, res) => {
 
     try {
         const newMessage = new Message({
-            userName: req.user.userId, // associate the message with the logged-in user
+            email: req.user.userId, // associate the message with the logged-in user
             title,
             message
         });
@@ -56,7 +56,7 @@ const putMessage = async (req, res) => {
 
     try {
         const updatedMessage = await Message.findOneAndUpdate(
-            { _id: id, userName: req.user.userId }, // ensure the user can only update their own messages
+            { _id: id, email: req.user.userId }, // ensure the user can only update their own messages
             { title, message },
             { new: true }
         );
