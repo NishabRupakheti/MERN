@@ -6,21 +6,18 @@ const Login = () => {
   const [emailf, setemailf] = useState("");
   const [passwordf, setpasswordf] = useState("");
   const { changeLogState, setToken, setIsAuthenticated } = useContext(Context);
+  const [error , setError] = useState('')
 
   const handleLogin = async () => {
     if (passwordf.length < 6 || emailf.length == 0) {
-      alert("Too short passoword or email");
+      setError("Too short passoword or email");
     } else {
       try {
         const result = await axios.post("http://localhost:4000/api/login", {
           email: emailf,
           password: passwordf,
         });
-
-        console.log("this is a result ", result);
-
         const token = result.data["token"];
-
         if (token) {
           localStorage.setItem("token", token);
           setToken(token);
@@ -28,7 +25,7 @@ const Login = () => {
         }
       } catch (err) {
         if (err.response.status == 400) {
-          alert("Credentials not matched");
+          setError("Credentials not matched");
           setpasswordf("");
         }
         console.log("Failed to send the request", err);
@@ -41,6 +38,9 @@ const Login = () => {
       <div className="container-fluid">
         <form className="mx-auto">
           <h4 className="text-center">Login</h4>
+          {
+            error && <div className="alert alert-danger mt-3" > {error} </div>
+          }
           <div className="mb-3 mt-5">
             <label htmlFor="exampleInputEmail1" className="form-label">
               Email

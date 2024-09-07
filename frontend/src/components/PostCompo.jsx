@@ -7,6 +7,13 @@ const PostCompo = () => {
 
   const [name, setName] = useState("");
   const [text, settext] = useState("");
+  const [status, setStatus] = useState("")
+
+  const removeStatusTimer = ()=>{
+    setTimeout(() => {
+      setStatus("")
+    }, 2000);
+  }
 
   const handleClick = async () => {
     try {
@@ -24,8 +31,15 @@ const PostCompo = () => {
       );
       setName("");
       settext("");
+      setStatus("Success")
+      removeStatusTimer()
     } catch (error) {
-      console.error(error);
+      console.error( "This is the frontend ",error);
+      if(error.response.status === 400){
+        setStatus("Title field missing")
+        removeStatusTimer()
+      }
+      
     }
   };
   return (
@@ -61,6 +75,9 @@ const PostCompo = () => {
           Submit
         </button>
       </div>
+      {
+        status && <div className="container  text-center alert alert-success " > {status}  </div>
+      }
     </>
   );
 };

@@ -6,33 +6,26 @@ import { FaRegEdit } from "react-icons/fa";
 
 const GetCompo = () => {
   const { data, getFunction, token } = useContext(Context);
-
   const [rerendering, setRerendering] = useState(true);
-
   const [updateState, setUpdateState] = useState(true);
-
-  const [inputf, setInputf] = useState("");
-
+  const [inputf, setInputf] = useState({});
   const [showInput, setShowInput] = useState({});
 
-  //Everytime the component render this function runs which is in the Context .. and the data is returned here to map and render ...
+  // Fetch data once on mount
   useEffect(() => {
     getFunction();
   }, [rerendering, updateState]);
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(
-        "http://localhost:4000/api/message",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          data:{
-            id : id
-          }
-        }
-      )
+      await axios.delete("http://localhost:4000/api/message", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        data: {
+          id: id,
+        },
+      });
 
       setRerendering(!rerendering);
     } catch (err) {
@@ -41,13 +34,13 @@ const GetCompo = () => {
   };
 
   const handleUpdate = async (id) => {
-    if (showInput) {
+    if (showInput[id]) {
       try {
         await axios.put(
           "http://localhost:4000/api/message",
           {
             id: id,
-            message: inputf,
+            message: inputf[id] || "",
           },
           {
             headers: {
@@ -56,9 +49,9 @@ const GetCompo = () => {
           }
         );
 
-        setInputf("");
+        setInputf((prevState) => ({ ...prevState, [id]: "" }));
         setUpdateState(!updateState);
-        setShowInput(!showInput);
+        setShowInput((prevState) => ({ ...prevState, [id]: false }));
       } catch (err) {
         console.error("Cannot send the put request", err);
       }
@@ -72,42 +65,60 @@ const GetCompo = () => {
     }));
   };
 
+  const handleInputChange = (id, value) => {
+    setInputf((prevState) => ({
+      ...prevState,
+      [id]: value,
+    }));
+  };
+
   return (
     <>
       {data.length > 0 ? (
         data.map((item) => (
           <div
             key={item._id}
-            className="card"
-            style={{ width: "32rem", marginBottom: "10px" }}
+            className="card shadow-sm mb-4"
+            style={{ width: "32rem" }}
           >
-            <div className="text-center card-header">id : {item._id}</div>
+            <div className="card-header text-center bg-primary text-white">
+              <strong>ID:</strong> {item._id}
+            </div>
             <div className="card-body">
-              <h5 className="card-title">
-                {item.title}{" "}
-                <FaRegEdit onClick={() => spawnInputField(item._id)} />{" "}
+              <h5 className="card-title d-flex justify-content-between align-items-center">
+                {item.title}
+                <FaRegEdit
+                  className="text-secondary"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => spawnInputField(item._id)}
+                />
               </h5>
-              <input
-                type="text"
-                value={inputf}
-                onChange={(e) => setInputf(e.target.value)}
-                className={`${showInput[item._id] ? "" : "inputf"}`}
-              />
+              {showInput[item._id] && (
+                <input
+                  type="text"
+                  value={inputf[item._id] || ""}
+                  onChange={(e) => handleInputChange(item._id, e.target.value)}
+                  className="form-control mb-3"
+                  placeholder="Edit"
+                />
+              )}
               <p className="card-text">{item.message}</p>
-              <a
-                href="#"
-                className="btn btn-primary"
-                onClick={() => handleDelete(item._id)}
-              >
-                Delete
-              </a>
-              <a
-                href="#"
-                className="btn btn-secondary mx-3"
-                onClick={() => handleUpdate(item._id)}
-              >
-                Update
-              </a>
+              <div className="d-flex justify-content-between">
+                <a
+                  href="#"
+                  className="btn btn-danger"
+                  onClick={() => handleDelete(item._id)}
+                >
+                  Delete
+                </a>
+                <a
+                  href="#"
+                  className="btn btn-secondary"
+                  onClick={() => handleUpdate(item._id)}
+                >
+                  Update
+                </a>
+              </div>
             </div>
           </div>
         ))
