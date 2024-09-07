@@ -11,7 +11,6 @@ const GetCompo = () => {
   const [inputf, setInputf] = useState({});
   const [showInput, setShowInput] = useState({});
 
-  // Fetch data once on mount
   useEffect(() => {
     getFunction();
   }, [rerendering, updateState]);
@@ -88,8 +87,7 @@ const GetCompo = () => {
               <h5 className="card-title d-flex justify-content-between align-items-center">
                 {item.title}
                 <FaRegEdit
-                  className="text-secondary"
-                  style={{ cursor: "pointer" }}
+                  style={{ cursor:"pointer"}}
                   onClick={() => spawnInputField(item._id)}
                 />
               </h5>

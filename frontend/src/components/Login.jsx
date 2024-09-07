@@ -6,7 +6,7 @@ const Login = () => {
   const [emailf, setemailf] = useState("");
   const [passwordf, setpasswordf] = useState("");
   const { changeLogState, setToken, setIsAuthenticated } = useContext(Context);
-  const [error , setError] = useState('')
+  const [error, setError] = useState("");
 
   const handleLogin = async () => {
     if (passwordf.length < 6 || emailf.length == 0) {
@@ -21,7 +21,7 @@ const Login = () => {
         if (token) {
           localStorage.setItem("token", token);
           setToken(token);
-          setIsAuthenticated(true)
+          setIsAuthenticated(true);
         }
       } catch (err) {
         if (err.response.status == 400) {
@@ -37,10 +37,13 @@ const Login = () => {
     <>
       <div className="container-fluid">
         <form className="mx-auto">
-          <h4 className="text-center alert alert-info" style={{fontFamily:"monospace"}}>Login</h4>
-          {
-            error && <div className="alert alert-danger mt-3" > {error} </div>
-          }
+          <h4
+            className="text-center alert alert-info"
+            style={{ fontFamily: "monospace" }}
+          >
+            Login
+          </h4>
+          {error && <div className="alert alert-danger mt-3"> {error} </div>}
           <div className="mb-3 mt-5">
             <label htmlFor="exampleInputEmail1" className="form-label">
               Email

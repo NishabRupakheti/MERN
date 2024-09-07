@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import Context from "../Stores/contextProvider";
 
 const Sidebar = () => {
-  const { setdisplayLogic, getFunction , displayLogic , setIsAuthenticated , setToken } = useContext(Context);
+  const { setdisplayLogic, setIsAuthenticated , setToken } = useContext(Context);
 
   const logutLogic = ()=>{
     setIsAuthenticated(false)
