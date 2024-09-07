@@ -8,6 +8,12 @@ const Registration = () => {
   const [passwordf, setPasswordf] = useState("");
   const [error, setError] = useState();
 
+  const removeErrorTimer = ()=>{
+    setTimeout(() => {
+      setError("")
+    }, 2000);
+  }
+
   const handleRegister = async (e) => {
     e.preventDefault();
 
@@ -22,6 +28,7 @@ const Registration = () => {
           setEmailf("");
           setPasswordf("");
           setError("Success");
+          removeErrorTimer()
         }
       } catch (err) {
         console.log(err);
@@ -30,6 +37,8 @@ const Registration = () => {
         }
         if(err.response.status === 400){
           setError("Password criteria  mismatched")
+          setPasswordf("")
+          removeErrorTimer()
         }
 
 
@@ -40,7 +49,7 @@ const Registration = () => {
     <>
       <div className="container-fluid">
         <form className="mx-auto" onSubmit={handleRegister}>
-          <h4 className="text-center">Registration</h4>
+          <h4 className="text-center alert alert-info" style={{fontFamily:"monospace"}} >Register</h4>
           {error && <div className="alert alert-danger">{error}</div>}
           <div className="mb-3 mt-5">
             <label htmlFor="exampleInputEmail1" className="form-label">

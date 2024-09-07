@@ -34,9 +34,8 @@ const registerUser = async (req, res) => {
   } catch (err) {
     console.error("Error counterd while registering" , err.errors);
 
-    res.status(500).json({
-      message : "Internal server error",
-      err: err.errors
+    res.status(400).json({
+      err
     })
 
   }

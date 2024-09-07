@@ -37,7 +37,7 @@ const Login = () => {
     <>
       <div className="container-fluid">
         <form className="mx-auto">
-          <h4 className="text-center">Login</h4>
+          <h4 className="text-center alert alert-info" style={{fontFamily:"monospace"}}>Login</h4>
           {
             error && <div className="alert alert-danger mt-3" > {error} </div>
           }

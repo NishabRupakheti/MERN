@@ -14,7 +14,6 @@ const getMessage = async (req, res) => {
 // Logic to create a new message
 const createMessage = async (req, res) => {
     const { title, message } = req.body;
-
     try {
         const newMessage = new Message({
             email: req.user.userId, // associate the message with the logged-in user
@@ -26,7 +25,7 @@ const createMessage = async (req, res) => {
         res.status(201).json({ message: "Message created successfully", newMessage });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ message: "Error creating message" });
+        res.status(400).json({ message: "Error creating message" });
     }
 };
 
