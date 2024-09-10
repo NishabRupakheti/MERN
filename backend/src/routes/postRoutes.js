@@ -16,7 +16,6 @@ router.post("/message", protect, createMessage);
 router.delete("/message", protect, deleteMessage);
 router.put("/message", protect, putMessage);
 
-
 router.post("/register", registerUser);
 router.post("/login", loginUser);
 

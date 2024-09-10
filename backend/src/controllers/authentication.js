@@ -8,7 +8,6 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 // registration logic ...
 const registerUser = async (req, res) => {
-  // take the user cred and stores them in the database ...
   const { email, password } = req.body;
 
   // check if the user already exist ..
@@ -19,7 +18,6 @@ const registerUser = async (req, res) => {
         message: "User already registered ",
       });
     }
-    // if not creates a new object instance of the model and saves it ...
     const user = new User({
       email,
       password,
@@ -41,7 +39,6 @@ const registerUser = async (req, res) => {
 // Login logic .....
 const loginUser = async (req, res) => {
   try {
-    // taking the cred from the client ...
     const { email, password } = req.body;
     const findUser = await User.findOne({ email });
 
@@ -50,7 +47,6 @@ const loginUser = async (req, res) => {
         message: "User not found",
       });
 
-    // if the user is found check if the provided password is correct .. generate token and send it back to client ..
     if (findUser.password == password) {
       const token = jwt.sign(
         { userId: findUser._id, email: findUser.email },
@@ -61,6 +57,7 @@ const loginUser = async (req, res) => {
       res.json({
         token: token,
       });
+      
     } else {
       res.status(400).json({
         message: "Not matched",

@@ -2,7 +2,6 @@ const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 dotenv.config();
 
-// this is a middleware that protects all the routes ....
 const protect = (req, res, next) => {
   // Extracting the token ..
   const authHead = req.headers["authorization"];
